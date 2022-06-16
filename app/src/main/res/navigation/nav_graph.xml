@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/navigation_coin_list_fragment">
+
+
+    <fragment
+        android:id="@+id/navigation_coin_list_fragment"
+        android:name="com.example.cryptotrackerapp.presentation.coin_list.view.CoinListFragment"
+        android:label="List Coins"
+        tools:layout="@layout/fragment_coin_list" >
+
+        <action
+            android:id="@+id/action_navigation_home_to_coin_detail"
+            app:destination="@id/navigation_coin_detail"
+            app:popUpTo="@id/navigation_coin_list_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_coin_detail"
+        android:name="com.example.cryptotrackerapp.presentation.coin_detail.view.CoinDetailFragment"
+        android:label="Set Alert"
+        tools:layout="@layout/fragment_coin_history" >
+
+        <action
+            android:id="@+id/action_navigation_coin_detail_to_coin_history"
+            app:destination="@id/navigation_coin_history"
+            app:popUpTo="@id/navigation_coin_list_fragment"
+            app:enterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_coin_history"
+        android:name="com.example.cryptotrackerapp.presentation.coin_history.view.CoinHistoryFragment"
+        android:label="Coin History"
+        tools:layout="@layout/fragment_coin_detail" >
+
+    </fragment>
+
+</navigation>

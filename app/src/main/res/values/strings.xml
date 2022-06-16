@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CryptoTrackerApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="fragment_name">Main Fragment</string>
+    <string name="action_type">Islem Tipi</string>
+    <string name="current_price">Current Price</string>
 </resources>

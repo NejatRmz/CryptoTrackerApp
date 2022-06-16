@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="price_change_percentage_margin">0dp</dimen>
+    <dimen name="price_change_percentage_padding">1dp</dimen>
+</resources>

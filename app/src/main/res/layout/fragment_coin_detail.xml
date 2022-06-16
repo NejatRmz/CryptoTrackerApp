@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".presentation.coin_detail.view.CoinDetailFragment">
+
+    <TextView
+        android:id="@+id/actionType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/action_type"
+        style="@style/SwitchBetween"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/currentPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_price"
+        style="@style/SwitchBetween"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/coinName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BTC"
+        style="@style/SwitchBetween"
+        android:layout_margin="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/actionType"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/coinPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="20.34 USD"
+        style="@style/SwitchBetween"
+        android:layout_margin="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/currentPrice"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_max_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Maximum Value"
+        style="@style/SwitchBetween"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/coinName"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/max_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_max_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Maximum Price"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_max_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_min_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Minimum Value"
+        style="@style/SwitchBetween"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/max_price"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/min_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_min_value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:hint="Minimum Price"
+        app:errorEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_min_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_set_alarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Set Alarm"
+        app:layout_constraintTop_toBottomOf="@id/min_price"/>
+
+    <Button
+        android:id="@+id/btn_show_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:text="Show History"
+        app:layout_constraintTop_toBottomOf="@id/btn_set_alarm"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
