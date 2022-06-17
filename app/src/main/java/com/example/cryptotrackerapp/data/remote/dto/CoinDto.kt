@@ -41,6 +41,7 @@ fun CoinDto.toCoin(): Coin {
         image = image,
         symbol = symbol,
         current_price = current_price,
-        sparkline = sparkline_in_7d
+        sparkline = sparkline_in_7d,
+        price_change_percentage_24h = price_change_percentage_24h
     )
 }

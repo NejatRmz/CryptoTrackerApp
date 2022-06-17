@@ -35,8 +35,7 @@ class CoinDetailFragment : Fragment() {
         binding = FragmentCoinDetailBinding.inflate(inflater, container, false)
 
         arguments?.let {
-
-            binding.coinName.text = it.getString("coin_id").toString()
+            binding.coinName.text = it.getString("coin_symbol").toString().uppercase()
             binding.coinPrice.text = it.getDouble("coin_price").toString()
 
         }

@@ -32,11 +32,6 @@
             app:popUpTo="@id/navigation_coin_list_fragment"
             app:enterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-
-        <argument
-            android:name="coin"
-            app:argType="com.example.cryptotrackerapp.domain.model.Coin"
-            />
     </fragment>
 
     <fragment

@@ -89,6 +89,8 @@ class CoinListAdapter(private val coinList: ArrayList<Coin>) :
                 Log.d(TAG, coin.name)
                 itemBinding.abb.text = coin.symbol.uppercase()
                 itemBinding.name.text = coin.id.uppercase()
+                itemBinding.price.text = coin.current_price.toString()
+                itemBinding.change.text = coin.price_change_percentage_24h.toString()
 
                 if (coin.sparkline.price.size > 0) {
                     drawChart(itemBinding.dataChart, coin.sparkline.price)

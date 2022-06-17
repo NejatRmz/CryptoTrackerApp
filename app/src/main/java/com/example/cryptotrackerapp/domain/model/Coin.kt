@@ -8,5 +8,6 @@ data class Coin(
     var image: String,
     var symbol: String,
     var current_price: Double,
-    var sparkline: SparklineIn7d
+    var sparkline: SparklineIn7d,
+    var price_change_percentage_24h: Double
 )

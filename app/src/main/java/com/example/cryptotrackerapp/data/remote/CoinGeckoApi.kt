@@ -31,9 +31,6 @@ interface CoinGeckoApi {
     ): SimpleCoinsList
 
 
-    @GET("/wp-content/uploads/2022/02/220849-scaled.jpg")
-    suspend fun downloadImage(): retrofit2.Response<ResponseBody>
-
     companion object {
         val instance by lazy {
             Retrofit.Builder()
