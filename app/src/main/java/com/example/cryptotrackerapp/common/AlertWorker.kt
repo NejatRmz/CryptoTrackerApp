@@ -3,16 +3,17 @@ package com.example.cryptotrackerapp.common
 import android.content.Context
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.asLiveData
-import androidx.work.CoroutineWorker
-import androidx.work.ForegroundInfo
-import androidx.work.WorkerParameters
-import androidx.work.workDataOf
+import androidx.work.*
 import com.example.cryptotrackerapp.R
 import com.example.cryptotrackerapp.common.datastore.DataStoreRepository
 import com.example.cryptotrackerapp.data.remote.CoinGeckoApi
 import com.example.cryptotrackerapp.data.remote.dto.SimpleCoinsList
 import kotlinx.coroutines.delay
 import kotlin.random.Random
+
+const val KEY_MESSAGE = "message"
+const val FIRST_KEY = "first"
+const val SECOND_KEY = "second"
 
 @Suppress("BlockingMethodInNonBlockingContext")
 class AlertWorker(
@@ -70,9 +71,13 @@ class AlertWorker(
         }
 
 
-        return Result.failure(
-            workDataOf(WorkerKeys.ERROR_MSG to "Unknown error")
-        )
+        val outputData = createOutputData("Hello There From Output", 56)
+
+        return Result.success(outputData)
+//
+//        return Result.failure(
+//            workDataOf(WorkerKeys.ERROR_MSG to "Unknown error")
+//        )
     }
 
     private suspend fun startForegroundService(alert: String, price: String) {
@@ -95,4 +100,12 @@ class AlertWorker(
         val readFromDataStore = repository.readFromDataStore.asLiveData()
 
     }
+
+    private fun createOutputData(firstData: String, secondData: Int): Data {
+        return Data.Builder()
+            .putString(FIRST_KEY, firstData)
+            .putInt(SECOND_KEY, secondData)
+            .build()
+    }
+
 }

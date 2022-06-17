@@ -12,6 +12,8 @@ import androidx.navigation.findNavController
 import androidx.work.*
 import com.example.cryptotrackerapp.R
 import com.example.cryptotrackerapp.common.AlertWorker
+import com.example.cryptotrackerapp.common.FIRST_KEY
+import com.example.cryptotrackerapp.common.SECOND_KEY
 import com.example.cryptotrackerapp.common.autoCleared
 import com.example.cryptotrackerapp.databinding.FragmentCoinDetailBinding
 import com.example.cryptotrackerapp.presentation.coin_detail.viewmodel.CoinDetailViewModel
@@ -41,7 +43,7 @@ class CoinDetailFragment : Fragment() {
         }
         val root: View = binding.root
 
-        val downloadRequest = OneTimeWorkRequestBuilder<AlertWorker>()
+        val alertRequest = OneTimeWorkRequestBuilder<AlertWorker>()
             .setConstraints(
                 Constraints.Builder()
                     .setRequiredNetworkType(
@@ -51,6 +53,7 @@ class CoinDetailFragment : Fragment() {
             )
             .build()
 
+
         val workManager = WorkManager.getInstance(requireContext())
 
 
@@ -59,7 +62,7 @@ class CoinDetailFragment : Fragment() {
                 .beginUniqueWork(
                     "download",
                     ExistingWorkPolicy.KEEP,
-                    downloadRequest
+                    alertRequest
                 )
                 .enqueue()
 
@@ -101,8 +104,13 @@ class CoinDetailFragment : Fragment() {
         workManager.enqueue(sendingLog)
 
         workManager.getWorkInfoByIdLiveData(sendingLog.id)
-            .observe(requireActivity(), Observer { workInfo ->
-                binding.btnShowHistory.text = workInfo.outputData.toString()
+            .observe(requireActivity(), Observer {
+                val successOutputData = it.outputData
+                val firstValue = successOutputData.getString(FIRST_KEY)
+                val secondValue = successOutputData.getInt(SECOND_KEY, -72)
+
+                Log.e(TAG, firstValue.toString())
+                Log.e(TAG, secondValue.toString())
             })
     }
 
