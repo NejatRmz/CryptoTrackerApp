@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.datastore.core.DataStore
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,16 +17,13 @@ import com.example.cryptotrackerapp.databinding.FragmentCoinDetailBinding
 import com.example.cryptotrackerapp.presentation.coin_detail.viewmodel.CoinDetailViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.concurrent.TimeUnit
-import java.util.prefs.Preferences
 
 @AndroidEntryPoint
 class CoinDetailFragment : Fragment() {
 
-    private lateinit var mainViewModel: CoinDetailViewModel
+    private lateinit var viewModel: CoinDetailViewModel
 
     private var binding: FragmentCoinDetailBinding by autoCleared()
-
-    private lateinit var dataStore: DataStore<Preferences>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,10 +31,16 @@ class CoinDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        mainViewModel = ViewModelProvider(this).get(CoinDetailViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(CoinDetailViewModel::class.java)
         binding = FragmentCoinDetailBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
+        arguments?.let {
+
+            binding.coinName.text = it.getString("coin_id").toString()
+            binding.coinPrice.text = it.getDouble("coin_price").toString()
+
+        }
+        val root: View = binding.root
 
         val downloadRequest = OneTimeWorkRequestBuilder<AlertWorker>()
             .setConstraints(
@@ -65,11 +67,11 @@ class CoinDetailFragment : Fragment() {
             setPeriodicallySendingLogs()
             val maxPrice = binding.etMaxPrice.text.toString()
             val minPrice = binding.etMinPrice.text.toString()
-            mainViewModel.saveToDataStore(maxPrice, minPrice)
+            viewModel.saveToDataStore(maxPrice, minPrice)
         }
 
 
-        mainViewModel.readFromDataStore.observe(requireActivity()) { it ->
+        viewModel.readFromDataStore.observe(requireActivity()) { it ->
             Log.e(TAG, "Max Value ${it[0]}")
             Log.e(TAG, "Min Value ${it[1]}")
             binding.maxPrice.hint = it.get(0)
@@ -104,4 +106,5 @@ class CoinDetailFragment : Fragment() {
                 binding.btnShowHistory.text = workInfo.outputData.toString()
             })
     }
+
 }

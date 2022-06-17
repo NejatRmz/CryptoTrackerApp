@@ -1,5 +1,6 @@
 package com.example.cryptotrackerapp.presentation.coin_list.adapter
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -30,7 +31,12 @@ class CoinListAdapter(private val coinList: ArrayList<Coin>) :
         holder.itemView.setOnClickListener {
             Log.d(TAG, coin.id)
             try {
-                binding.root.findNavController().navigate(R.id.navigation_coin_detail)
+                val bundle = Bundle()
+                bundle.putString("coin_id", coin.id)
+                bundle.putString("coin_name", coin.name)
+                bundle.putString("coin_symbol", coin.symbol)
+                bundle.putDouble("coin_price", coin.current_price)
+                binding.root.findNavController().navigate(R.id.navigation_coin_detail, bundle)
             }catch (e: Exception) {
                 e.printStackTrace()
             }
