@@ -1,111 +1,84 @@
 package com.example.cryptotrackerapp.common
 
 import android.content.Context
-import androidx.core.app.NotificationCompat
-import androidx.lifecycle.asLiveData
-import androidx.work.*
-import com.example.cryptotrackerapp.R
-import com.example.cryptotrackerapp.common.datastore.DataStoreRepository
+import android.text.TextUtils
+import android.util.Log
+import androidx.work.CoroutineWorker
+import androidx.work.Data
+import androidx.work.WorkerParameters
+import com.example.cryptotrackerapp.common.Constants.COIN_NAME
+import com.example.cryptotrackerapp.common.Constants.KEY_IMAGE_URI
+import com.example.cryptotrackerapp.common.Constants.MAXIMUM_VALUE
+import com.example.cryptotrackerapp.common.Constants.MINIMUM_VALUE
 import com.example.cryptotrackerapp.data.remote.CoinGeckoApi
 import com.example.cryptotrackerapp.data.remote.dto.SimpleCoinsList
-import kotlinx.coroutines.delay
-import kotlin.random.Random
 
-const val KEY_MESSAGE = "message"
-const val FIRST_KEY = "first"
-const val SECOND_KEY = "second"
+private const val TAG = "CoinDetailWorker"
 
-@Suppress("BlockingMethodInNonBlockingContext")
-class AlertWorker(
-    private val context: Context,
-    private val workerParams: WorkerParameters
+class MyWorker(
+    context: Context,
+    workerParams: WorkerParameters
 ) : CoroutineWorker(context, workerParams) {
 
     private lateinit var response: SimpleCoinsList
 
-    private var btcMax = 0.0
-    private var btcMin = 0.0
-
-    private var ethMax = 0.0
-    private var ethMin = 0.0
-
-    private var rippleMax = 0.0
-    private var rippleMin = 0.0
-
     override suspend fun doWork(): Result {
+
+
+        val appContext = applicationContext
+        val coinName = inputData.getString(COIN_NAME)
+        val maximumValue = inputData.getString(MAXIMUM_VALUE)
+        val minimumValue = inputData.getString(MINIMUM_VALUE)
+        Log.e(TAG, coinName.toString())
+        Log.e(TAG, maximumValue.toString())
+        Log.e(TAG, minimumValue.toString())
 
         response = CoinGeckoApi.instance.getSimpleCoinsListPrice("bitcoin,ethereum,ripple", "usd")
 
-        read()
+        return try {
+            if (TextUtils.isEmpty(coinName)) {
+                Log.e(TAG, "Invalid input uri")
+                throw IllegalArgumentException("Invalid input uri")
+            }
 
-        if (response.bitcoin.usd > btcMax) {
-            startForegroundService("Bitcoin yukseldi", response.bitcoin.usd.toString())
-            delay(5000L)
+            if (TextUtils.isEmpty(maximumValue)) {
+                Log.e(TAG, "Invalid input uri")
+                throw IllegalArgumentException("Invalid input uri")
+            }
+
+            if (TextUtils.isEmpty(minimumValue)) {
+                Log.e(TAG, "Invalid input uri")
+                throw IllegalArgumentException("Invalid input uri")
+            }
+
+            val result = response.bitcoin.usd.toString()
+
+            if (maximumValue != null) {
+                if (response.bitcoin.usd.toDouble() > maximumValue.toDouble()) {
+                    makeStatusNotification("Bitcoin Yukseldi. Fiyat ${result}", appContext)
+                }
+            }
+
+            if (minimumValue != null) {
+                if (response.bitcoin.usd.toDouble() < minimumValue.toDouble()) {
+                    makeStatusNotification("Bitcoin Dustu. Fiyat ${result}", appContext)
+                }
+            }
+
+            val outputData = createOutputData("Output Data ${result} with function")
+
+            Result.success(outputData)
+        } catch (throwable: Throwable) {
+            Log.e(TAG, "Error applying blur")
+            throwable.printStackTrace()
+            Result.failure()
         }
-
-        if (response.bitcoin.usd < btcMin) {
-            startForegroundService("Bitcoin dustu", response.bitcoin.usd.toString())
-            delay(5000L)
-        }
-
-
-        if (response.ethereum.usd > ethMax) {
-            startForegroundService("Ethereum yukseldi", response.ethereum.usd.toString())
-            delay(5000L)
-        }
-
-        if (response.ethereum.usd < ethMin) {
-            startForegroundService("Ethereum dustu", response.ethereum.usd.toString())
-            delay(5000L)
-        }
-
-
-        if (response.ripple.usd > rippleMax) {
-            startForegroundService("Ripple yukseldi", response.ripple.usd.toString())
-            delay(5000L)
-        }
-
-        if (response.ripple.usd < rippleMin) {
-            startForegroundService("Ripple dustu", response.ripple.usd.toString())
-            delay(5000L)
-        }
-
-
-        val outputData = createOutputData("Hello There From Output", 56)
-
-        return Result.success(outputData)
-//
-//        return Result.failure(
-//            workDataOf(WorkerKeys.ERROR_MSG to "Unknown error")
-//        )
-    }
-
-    private suspend fun startForegroundService(alert: String, price: String) {
-        setForeground(
-            ForegroundInfo(
-                Random.nextInt(),
-                NotificationCompat.Builder(context, "download_channel")
-                    .setSmallIcon(R.drawable.ic_baseline_notifications_24)
-                    .setContentText(price)
-                    .setContentTitle(alert)
-                    .build()
-            )
-        )
-    }
-
-    private suspend fun read() {
-        var arr: ArrayList<String> = arrayListOf()
-
-        val repository = DataStoreRepository(context)
-        val readFromDataStore = repository.readFromDataStore.asLiveData()
 
     }
 
-    private fun createOutputData(firstData: String, secondData: Int): Data {
+    private fun createOutputData(data: String): Data {
         return Data.Builder()
-            .putString(FIRST_KEY, firstData)
-            .putInt(SECOND_KEY, secondData)
+            .putString(KEY_IMAGE_URI, data)
             .build()
     }
-
 }
