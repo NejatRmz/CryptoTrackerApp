@@ -1,4 +1,4 @@
-package com.example.cryptotrackerapp.common
+package com.example.cryptotrackerapp.common.workmanager
 
 object WorkerKeys {
     const val ERROR_MSG = "errorMsg"

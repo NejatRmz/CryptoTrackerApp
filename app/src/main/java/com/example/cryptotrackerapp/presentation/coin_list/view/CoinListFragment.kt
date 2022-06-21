@@ -10,9 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.cryptotrackerapp.common.Constants
-import com.example.cryptotrackerapp.common.OnItemClick
-import com.example.cryptotrackerapp.common.Sparkline
+import com.example.cryptotrackerapp.common.workmanager.OnItemClick
 import com.example.cryptotrackerapp.data.remote.dto.toCoin
 import com.example.cryptotrackerapp.databinding.FragmentCoinListBinding
 import com.example.cryptotrackerapp.domain.model.Coin
@@ -20,7 +18,6 @@ import com.example.cryptotrackerapp.presentation.coin_list.adapter.CoinListAdapt
 import com.example.cryptotrackerapp.presentation.coin_list.viewmodel.CoinListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

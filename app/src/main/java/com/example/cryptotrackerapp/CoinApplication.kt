@@ -1,24 +1,19 @@
 package com.example.cryptotrackerapp
 
 import android.app.Application
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.os.Build
+import androidx.work.Configuration
+import com.example.cryptotrackerapp.common.workmanager.AlertWorkerFactory
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 @HiltAndroidApp
-class CoinApplication:Application() {
-    override fun onCreate() {
-        super.onCreate()
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                "download_channel",
-                "File download",
-                NotificationManager.IMPORTANCE_HIGH
-            )
+class CoinApplication : Application(), Configuration.Provider {
 
-            val notificationManager = getSystemService(NotificationManager::class.java)
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
+    @Inject
+    lateinit var alertWorkerFactory: AlertWorkerFactory
+
+    override fun getWorkManagerConfiguration(): Configuration = Configuration.Builder()
+        .setMinimumLoggingLevel(android.util.Log.DEBUG)
+        .setWorkerFactory(alertWorkerFactory)
+        .build()
 }

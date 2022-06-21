@@ -1,4 +1,4 @@
-package com.example.cryptotrackerapp.common
+package com.example.cryptotrackerapp.common.workmanager
 
 object AlertUtil {
 

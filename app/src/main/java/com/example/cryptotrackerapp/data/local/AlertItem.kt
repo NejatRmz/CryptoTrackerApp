@@ -4,10 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "coin_items")
-data class CoinItem(
+@Entity(tableName = "alert_items")
+data class AlertItem(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id") var id: Int,
     @ColumnInfo(name = "name") var name: String?,
-    @ColumnInfo(name = "price") var price: Double?
+    @ColumnInfo(name = "maximum") var maximum: Double?,
+    @ColumnInfo(name = "minimum") var minimum: Double?
 )

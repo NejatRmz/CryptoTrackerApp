@@ -14,4 +14,11 @@ interface CoinDao {
     @Query("SELECT * FROM coin_items")
     fun observeAllCoinItems(): LiveData<List<CoinItem>>
 
+    @Query("SELECT * FROM coin_items")
+    suspend fun getAllCoins(): List<CoinItem>
+
+    @Query("SELECT * FROM coin_items where  name LIKE :coinName order by id DESC LIMIT 1")
+    suspend fun getLatestCoinByName(coinName: String): CoinItem
+
+
 }

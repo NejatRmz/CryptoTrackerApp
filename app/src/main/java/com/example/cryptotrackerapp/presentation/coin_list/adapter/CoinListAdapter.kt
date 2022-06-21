@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cryptotrackerapp.R
-import com.example.cryptotrackerapp.common.OnItemClick
+import com.example.cryptotrackerapp.common.workmanager.OnItemClick
 import com.example.cryptotrackerapp.common.Sparkline
 import com.example.cryptotrackerapp.common.drawChart
 import com.example.cryptotrackerapp.databinding.CoinListItemBinding

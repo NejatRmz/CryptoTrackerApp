@@ -16,7 +16,7 @@
 
 @file:JvmName("WorkerUtils")
 
-package com.example.cryptotrackerapp.common
+package com.example.cryptotrackerapp.common.workmanager
 
 import android.app.NotificationChannel
 import android.app.NotificationManager

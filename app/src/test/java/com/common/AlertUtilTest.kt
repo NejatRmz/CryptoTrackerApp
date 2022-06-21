@@ -1,7 +1,7 @@
 package com.common
 
 
-import com.example.cryptotrackerapp.common.AlertUtil
+import com.example.cryptotrackerapp.common.workmanager.AlertUtil
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 
