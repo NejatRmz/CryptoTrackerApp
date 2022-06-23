@@ -25,5 +25,6 @@ Features
 * Save this rate value to show in history page
 
 
+## Screenshots
 
-
+<img src="screenshots/output.png"/>
